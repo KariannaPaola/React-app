@@ -6,6 +6,15 @@ import { Inicio } from "../components/Inicio";
 
 const API_key= "82fc940742fb28109bf3655b0a95f776";
 
+/**
+ * Componente que muestra el clima actual basado en la geolocalización del usuario.
+ * Utiliza los hooks `usePosition` para obtener lat/lon y `useFetch` para consultar
+ * la API de OpenWeatherMap.
+ *
+ * @component
+ * @returns  html con información del clima (temperatura, humedad, viento, etc...) o mensajes de error si no se logra obtener la información.
+*/
+
 function ClimaActual(){
 const { localizacion, errorUbicacion } = usePosition();
 const { data, error }= useFetch(localizacion ? `https://api.openweathermap.org/data/2.5/weather?lat=${localizacion.lat}&lon=${localizacion.lon}&appid=${API_key}&units=metric&lang=es`: null);
@@ -40,11 +49,27 @@ else{
   } 
 }
 
+/**
+ * Componente que permite al usuario buscar el clima por nombre de ciudad.
+ * Usa `useState` para manejar la entrada de texto escrita por el usuario y la ciudad seleccionada,
+ * y `useFetch` para consumir la API de OpenWeatherMap.
+ *
+ * @component
+ * @returns html con un buscador y los resultados del clima de la ciudad ingresada.
+*/
+
 function BuscadorClima(){
   const [ciudad, setciudadBuscada]= useState("");
   const [inputValue, setInputValue] = useState("");
   const { data, error }= useFetch(ciudad ? `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${API_key}&units=metric&lang=es`: null);
   
+/**
+   * Función que determina que mostrar segun el estado de la busqueda
+   *
+   * @function MostarResultado
+   * @returns Componente con el resultado del clima, mensaje de carga,error, o ciudad no encontrada
+*/
+
   function MostarResultado() {
       if (ciudad && error){
         return <p>Error</p>

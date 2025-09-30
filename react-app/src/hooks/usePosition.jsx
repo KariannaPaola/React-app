@@ -1,5 +1,13 @@
 import  { useState, useEffect } from 'react';
 
+/**
+ * Hook creado para obtener la ubicacion geografica del usuario mediante `navigator.geolocation`
+ *
+ * @returns Un objeto con dos propiedades:
+ *   -localizacion: un objeto con `lat` (latitud) y `lon` (longitud) si la ubicación se obtuvo correctamente
+ *   - errorUbicacion: un mensaje de error si hubo algun problema al obtener la ubicacion
+ */
+
 function usePosition(){
   const [localizacion, setLocalizacion] = useState(null);
   const [errorUbicacion, setError] = useState(null);
